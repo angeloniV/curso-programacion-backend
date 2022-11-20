@@ -70,8 +70,8 @@ productManager.addProduct("Producto prueba", "Este es un producto prueba",
 console.log(productManager.getProducts());
 
 // Se llamará al método “addProduct” con los mismos campos de arriba, debe arrojar un error porque el código estará repetido.
-productManager.addProduct("Producto prueba", "Este es un producto prueba",
-    200, "Sin imagen", "abc123", 25);
+console.log(productManager.addProduct("Producto prueba", "Este es un producto prueba",
+    200, "Sin imagen", "abc123", 25));
 
 // Se evaluará que getProductById devuelva error si no encuentra el producto o el producto en caso de encontrarlo. Response: Product
 console.log(productManager.getProductById(1));
