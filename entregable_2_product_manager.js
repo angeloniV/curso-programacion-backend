@@ -14,7 +14,7 @@ class ProductManager {
     }
 
     refreshProductInProductManagerFile = (products) => {
-        fs.writeFileSync(this.path, JSON.stringify({ 'products': products })); // esta bien sobre escribir el archivo ? 
+        fs.writeFileSync(this.path, JSON.stringify({ 'products': products }));
     }
 
     readProductManagerFile() {
@@ -55,16 +55,17 @@ class ProductManager {
     deleteProductByCode = (code) => {
         if (this.existsProductByCode(code)) {
             const productManagerJSON = this.getProductManagerJSONFromFile();
-            this.refreshProductInProductManagerFile(productManagerJSON.products.find(product => product.code != code));
+            this.refreshProductInProductManagerFile(productManagerJSON.products.filter(product => product.code != code));
         } else {
-            return 'No existe el archivo'
+            return 'No existe el producto'
         }
     }
 
     deleteProductById = (id) => {
         if (this.existsProductById(id)) {
             const productManagerJSON = this.getProductManagerJSONFromFile();
-            this.refreshProductInProductManagerFile(productManagerJSON.products.find(product => product.id != id));
+            const productsFiltered = productManagerJSON.products.filter(product => product.id !== id);
+            this.refreshProductInProductManagerFile(productsFiltered);
         } else {
             return 'No existe el archivo'
         }
@@ -136,11 +137,10 @@ console.log(productManager.getProducts());
 // Se llamará al método “addProduct” 
 productManager.addProduct("Producto prueba", "Este es un producto prueba",
     200, "Sin imagen", "abc123", 25);
-
-// Se llamará al método “addProduct” 
 productManager.addProduct("Producto prueba 2", "Este es un producto prueba 2",
     300, "Sin imagen 2", "abc1234", 50);
-
+productManager.addProduct("Producto prueba 3", "Este es un producto prueba 3",
+    300, "Sin imagen 3", "abc12345", 50);
 
 //Se llamará el método “getProducts” nuevamente, esta vez debe aparecer el producto recién agregado
 console.log(productManager.getProducts());
@@ -149,11 +149,11 @@ console.log(productManager.getProducts());
 //en caso de no existir, debe arrojar un error.
 console.log(productManager.getProductById(1));
 
-console.log(productManager.getProductById(3)); // Error ya que no existe producto con ese id.
+console.log(productManager.getProductById(4)); // Error ya que no existe producto con ese id.
 
 // Se llamará al método “updateProduct” y se intentará cambiar un campo de algún producto,
 //se evaluará que no se elimine el id y que sí se haya hecho la actualización.
-productManager.updateProduct(1, "Producto prueba actualizaado", "Este es un producto prueba",
+productManager.updateProduct(1, "Producto prueba actualizaado", "Este es un producto prueba actualizado",
     200, "Sin imagen", "abc123", 25);
 
 console.log(productManager.getProductById(1));
@@ -161,7 +161,6 @@ console.log(productManager.getProductById(1));
 //Se llamará al método “deleteProduct”, se evaluará que realmente se elimine el producto
 //o que arroje un error en caso de no existir.
 productManager.deleteProductByCode('abc123');
-
 console.log(productManager.deleteProductByCode('abc124')); // caso no existir
 
-
+console.log(productManager.getProducts());
