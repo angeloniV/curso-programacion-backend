@@ -1,0 +1,35 @@
+
+<p class="text-start mt-3  mb-3" style="font-weight: bold;">Productos disponibles</p>
+<a type="button" class="btn btn-success btn-sm mb-3" href="/products/create">Crear producto</a>
+<table class="table table-primary table-striped table-hover">
+    <tr>
+        <td><strong>Producto</strong></td>
+        <td><strong>Descripción</strong></td>
+        <td><strong>Precio</strong></td>
+        <td><strong>Código</strong></td>
+        <td><strong>Stock</strong></td>
+        <td><strong>Categoría</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {{#each products}}
+    <tr>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.code}}</td>
+        <td>{{this.stock}}</td>
+        <td>{{this.category}}</td>
+        <td>
+          <a class="btn"  href="/products/eliminar/{{this.code}}"><i class="fa fa-trash"></i></a>
+        </td>
+        <td>
+            <a class="btn" href="/products/actualizar/{{this.code}}"><i class="fa fa-edit"></i></a>
+        </td>
+        <td>
+            <a class="btn" href="/products/ver/{{this.code}}"><i class="fa fa-eye"></i></a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
