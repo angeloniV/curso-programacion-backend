@@ -48,8 +48,6 @@ app.delete('/:uid', async (req, res) => {
     }
 });
 
-
-
 mongoose.connect('mongodb+srv://administrator:iaailvSEeiDX7jrH @cluster0.ozmlq6c.mongodb.net/?retryWrites=true&w=majority', {
     dbName: 'baseCrud'
 }, (error) => {
