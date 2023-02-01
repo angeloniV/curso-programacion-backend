@@ -1,0 +1,22 @@
+<p class="text-start mt-3  mb-3" style="font-weight: bold;">Ver producto</p>
+<div class="row justify-content-center">
+    <div class="card" style="width: 25rem;margin-top: 50px">
+        <img src="{{product.thumbnails}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{product.title}}</h5>
+            <p class="card-text">{{product.description}}</p>
+            <p class="card-text">Precio {{product.price}}</p>
+            <p class="card-text">Stock {{product.stock}}</p>
+            <p class="card-text">Categoria {{product.category}}</p>
+            <div class="text-center">
+                <form method="post" action="/carts/63d9b377a89fdbb26801a17e/product/{{product._id}}">
+                 {{#if product.stock}}
+                    <input class="btn btn-primary" type="submit" value="Agregar producto"/>
+                {{/if}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/showproduct.js"></script>

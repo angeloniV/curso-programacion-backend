@@ -1,0 +1,17 @@
+<p class="text-start mt-3  mb-3" style="font-weight: bold;">Eliminar producto</p>
+<div class="row justify-content-center">
+    <div class="card" style="width: 25rem;margin-top: 50px">
+    <img src="{{product.thumbnails}}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title"> {{product.title}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <p class="card-text">Precio {{product.price}}</p>
+        <p class="card-text">Stock {{product.stock}}</p>
+        <p class="card-text">Categoria {{product.category}}</p>
+    </div>
+    </div>
+</div>
+
+<form action="/products/api/{{product.code}}?_method=DELETE" method="post">
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+ </form>

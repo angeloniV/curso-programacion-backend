@@ -1,0 +1,37 @@
+<p class="text-start mt-3  mb-3" style="font-weight: bold;">Crear producto</p>
+<form action="/products/api/" method="post">
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Titulo</label>
+        <input type="text" class="form-control" id="titulo" name="title">
+    </div>
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <textarea class="form-control" id="descripcion" rows="3" name="description"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="precio" class="form-label">Precio</label>
+        <input type="number" class="form-control" id="precio" name="price">
+    </div>
+    <div class="mb-3">
+        <label for="thumbmails" class="form-label">Thumbmails</label>
+        <input type="text" class="form-control" id="thumbmails" name="thumbnails">
+    </div>
+    <div class="mb-3">
+        <label for="codigo" class="form-label">Codigo</label>
+        <input type="text" class="form-control" id="codigo" name="code">
+    </div>
+    <div class="mb-3">
+        <label for="stock" class="form-label">Stock</label>
+        <input type="number" class="form-control" id="stock" name="stock">
+    </div>
+    <div class="mb-3">
+        <label for="categoria" class="form-label">Categoria</label>
+        <input type="text" class="form-control" id="categoria" name="category">
+    </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="estado" checked name="status">
+        <label class="form-check-label" for="estado">Estado</label>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Crear</button>
+</form>
