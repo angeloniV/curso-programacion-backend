@@ -10,6 +10,8 @@ import methodOverride from 'method-override';
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { Server } from 'socket.io';
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
 
 const uri ="mongodb+srv://administrator:iaailvSEeiDX7jrH@cluster0.ozmlq6c.mongodb.net/?retryWrites=true&w=majority";
 const dbName = "ecommerce";
@@ -33,6 +35,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Configurar motor de plantillas
 app.engine('handlebars', handlebars.engine());

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import UserModel from "../dao/models/user.model.js";
+import passport from "passport";
 
 const router = Router();
 
@@ -8,36 +8,36 @@ router.get('/register', (req, res) => {
     res.render('sessions/register');
 })
 
-// API para crear usuarios en la DB
-router.post('/register', async(req, res) => {
-    const userNew = req.body
-    console.log(userNew);
+// API para registrar
+router.post('/register', passport.authenticate('register', { failureRedirect: '/session/failregister' }), async (req, res) => {
+    res.redirect('/session/login')
+});;
 
-    const user = new UserModel(userNew);
-    await user.save();
-
-    res.redirect('/session/login');
-})
+router.get('/failregister', (req, res) => {
+    return res.status(401).render('errors/base', {
+        error: 'Fail Strategy'
+    });
+});
 
 // Vista de Login
 router.get('/login', (req, res) => {
     res.render('sessions/login');
-})
+});
 
 // API para login
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    const user = await UserModel.findOne({email, password}).lean().exec()
-    if(!user) {
-        return res.status(401).render('errors/base', {
-            error: 'Error en email y/o password'
-        });
+router.post('/login', passport.authenticate('login', { failureRedirect: '/session/faillogin' }), async (req, res) => {
+    if (!req.user) {
+        return res.status(400).send({ status: "error", error: "Invalid credentiales" })
+    }
+    req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        age: req.user.age,
     }
 
-    req.session.user = user;
-    res.redirect('/products/list');
-})
+    res.redirect('/products/list')
+});
 
 // Cerrar Session
 router.get('/logout', (req, res) => {
@@ -49,8 +49,16 @@ router.get('/logout', (req, res) => {
             res.redirect('/session/login');
         }
     })
+});
+
+router.get('/faillogin', (req, res) => {
+    return res.status(401).render('errors/base', {
+        error: 'Fail Login'
+    });
 })
 
-
+router.get('/profile', (req, res) => {
+    res.json(req.session.user)
+})
 
 export default router;
