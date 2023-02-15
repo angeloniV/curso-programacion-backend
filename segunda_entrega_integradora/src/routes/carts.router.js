@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 
 router.get('/:cid', async (req, res) => {
     const id = req.params.cid;
-    const cart = await cartModel.findOne({_id: id});
+    const cart = await cartModel.findOne({_id: id}).populate("products.productId");
     res.render('showcart',
     {
         cartId : cart._id,

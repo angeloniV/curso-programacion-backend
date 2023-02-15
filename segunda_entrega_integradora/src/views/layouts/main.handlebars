@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {{!--
     <link rel="stylesheet" href="/css/styles.css"> --}}
-    <title>{{title}}</title>
+    <title>Ecommerce Angeloni</title>
 </head>
 
 <body class="bg-light bg-gradient">
@@ -24,6 +24,11 @@
                 <a href="/chat">
                     <img src="https://cdn-icons-png.flaticon.com/512/1250/1250186.png" alt="Chat" width="30" height="30" class="d-inline-block align-text-top"/>
                 </a>
+                {{#if request.user}}
+                    <a href="/session/logout">
+                        <img src="https://cdn-icons-png.flaticon.com/512/7016/7016580.png" alt="Logout" width="30" height="30" class="d-inline-block align-text-top"/>
+                    </a>
+                {{/if}}
             </div>
         </nav>
         {{{body}}}

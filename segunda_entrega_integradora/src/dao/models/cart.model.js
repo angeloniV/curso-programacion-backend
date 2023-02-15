@@ -18,10 +18,6 @@ const cartSchema = new mongoose.Schema({
 
 mongoose.set("strictQuery", false)
 
-// cartSchema.pre('findOne', function(){
-//     this.populate('products._id');
-// });
-
 const cartModel = mongoose.model(cartCollection, cartSchema);
 
 export default cartModel;

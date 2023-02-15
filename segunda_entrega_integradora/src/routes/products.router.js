@@ -54,10 +54,11 @@ router.get('/list', async (req, res) => {
 
     result.prevLink = result.hasPrevPage ? `/products/list?page=${result.prevPage}` : '';
     result.nextLink = result.hasNextPage ? `/products/list?page=${result.nextPage}` : '';
-
+    const user = req.session.user;
     res.render('listproduct',
         {
-            products: result
+            products: result,
+            user: user
         })
 });
 
