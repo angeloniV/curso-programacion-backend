@@ -1,11 +1,16 @@
 import passport from "passport";
 import local from "passport-local"
 import UserModel from "../dao/models/user.model.js";
-import { createHash, isValidPassword } from '../utils.js';
+import { createHash, isValidPassword, generateToken, extractCookie } from '../utils.js';
 import GitHubStrategy from 'passport-github2';
 import userModel from "../dao/models/user.model.js";
+import passport_jwt from 'passport-jwt'
+import { JWT_PRIVATE_KEY } from './credentials.js'
 
 const LocalStrategy = local.Strategy;
+const JWTStrategy = passport_jwt.Strategy;
+const ExtractJWT = passport_jwt.ExtractJwt;
+
 const initializePassport = () => {
 
     passport.use('register', new LocalStrategy({
@@ -48,6 +53,9 @@ const initializePassport = () => {
 
             if(!isValidPassword(user, password)) return done(null, false);
 
+            const token = generateToken(user);
+            user.token = token;
+
             return done(null, user);
         } catch (error) {
 
@@ -78,6 +86,15 @@ const initializePassport = () => {
             return done(error);
         }
     }));
+
+    // Seria la estrategia 'current' pedida en la consigna.
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([extractCookie]),
+        secretOrKey: JWT_PRIVATE_KEY
+    }, async(jwt_payload, done) => {
+        done(null, jwt_payload)
+    }));
+
 
     passport.serializeUser((user, done) => {
         done(null, user._id);

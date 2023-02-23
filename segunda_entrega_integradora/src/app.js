@@ -1,16 +1,17 @@
 import express from 'express';
-import productsRouter from './routes/products.router.js';
-import cartsRouter from './routes/carts.router.js';
-import chatRouter from './routes/chat.router.js'
-import sessionRouter from './routes/session.router.js'
-import handlebars from 'express-handlebars';
-import __dirname from './utils.js'
 import mongoose from 'mongoose';
 import methodOverride from 'method-override';
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { Server } from 'socket.io';
 import passport from "passport";
+import cookieParser from "cookie-parser";
+import productsRouter from './routes/products.router.js';
+import cartsRouter from './routes/carts.router.js';
+import chatRouter from './routes/chat.router.js';
+import sessionRouter from './routes/session.router.js';
+import handlebars from 'express-handlebars';
+import __dirname from './utils.js';
 import initializePassport from "./config/passport.config.js";
 
 const uri ="mongodb+srv://administrator:iaailvSEeiDX7jrH@cluster0.ozmlq6c.mongodb.net/?retryWrites=true&w=majority";
@@ -21,7 +22,7 @@ const app = express();
 // Para traer info como json
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
+app.use(cookieParser());
 // Para poder sobreescribir metodo de forms, tanto en actualizar producto como en eliminar. Ver botones submit en ambos casos.
 app.use(methodOverride('_method'))
 
