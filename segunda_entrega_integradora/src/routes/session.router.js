@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { JWT_COOKIE_NAME } from "../config/credentials";
 
 const router = Router();
 
@@ -29,26 +30,31 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/sessio
     if (!req.user) {
         return res.status(400).send({ status: "error", error: "Invalid credentiales" })
     }
-    req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        email: req.user.email,
-        age: req.user.age,
-    }
+    // Se comenta al utilizar jwt
+    // req.session.user = {
+    //     first_name: req.user.first_name,
+    //     last_name: req.user.last_name,
+    //     email: req.user.email,
+    //     age: req.user.age,
+    // }
 
+    res.cookie(JWT_COOKIE_NAME, req.user.token);
     res.redirect('/products/list')
 });
 
 // Cerrar Session
 router.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if(err) {
-            console.log(err);
-            res.status(500).render('errors/base', {error: err});
-        } else {
-            res.redirect('/session/login');
-        }
-    })
+    // Se comenta al utilizar jwt
+    // req.session.destroy(err => {
+    //     if(err) {
+    //         console.log(err);
+    //         res.status(500).render('errors/base', {error: err});
+    //     } else {
+    //         res.redirect('/session/login');
+    //     }
+    // });
+    res.clearCookie(JWT_COOKIE_NAME);
+    res.redirect('/session/login');
 });
 
 router.get('/faillogin', (req, res) => {
@@ -57,8 +63,13 @@ router.get('/faillogin', (req, res) => {
     });
 });
 
+// Seria la ruta 'current' pedida en la consigna.
 router.get('/profile', (req, res) => {
-    res.json(req.session.user)
+    // Se comenta al utilizar jwt
+    // res.json(req.session.user);
+
+    res.json(req.user.user);
+
 });
 
 // Github
